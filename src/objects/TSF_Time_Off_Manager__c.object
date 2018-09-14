@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>TSF_Addtional_Notes__c</fullName>
+        <description>Allows users to add additional notes for their time off requests.
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Feel like you have to share more details on your leave?
+Share away!</inlineHelpText>
+        <label>Addtional Notes</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TSF_Backup__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This user Lookup field lets the time off owner choose a backup who will then receive tasks for the time off period.
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please choose your backup.
+Your backup will then receive your tasks for the time your are out.</inlineHelpText>
+        <label>Backup</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Time_Off_Manager</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TSF_End_Date__c</fullName>
+        <description>The last day of your time off. 
+Note: If your End Date is July 31st, your tasks will be assigned back to you on August 1st.
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please add the last date of your time off request.
+Note: If your End Date is July 31st, your tasks will be assigned back to you on August 1st.</inlineHelpText>
+        <label>End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TSF_Is_currently_on_vacation__c</fullName>
+        <description>This formula checks if the user is currently on time off or not.
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <formula>If( TSF_End_Date__c -  TSF_Start_Date__c &gt; 0, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is currently on vacation?</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TSF_Start_Date__c</fullName>
+        <description>Date the time off starts. Example: 1st July 2018
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please add the start date your time off will start.
+Note: Starting this day, your tasks are going to be re-assigned to your backup.</inlineHelpText>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TSF_Time_Off_Reson__c</fullName>
+        <description>Reason for time off. Those values can be translated and reported on.
+Demen S. 3rd July 2018.</description>
+        <externalId>false</externalId>
+        <label>Time Off Reson</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Vacation</fullName>
+                    <default>false</default>
+                    <label>Vacation</label>
+                </value>
+                <value>
+                    <fullName>Sick</fullName>
+                    <default>false</default>
+                    <label>Sick</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <validationRules>
+        <fullName>TSF_EndDateNotBeforeStartDate</fullName>
+        <active>true</active>
+        <description>This validation rule ensures that the end date of the time off request is not before the start date.
+Demen S. 14th Sep 2018.</description>
+        <errorConditionFormula>TSF_End_Date__c &lt;  TSF_Start_Date__c</errorConditionFormula>
+        <errorDisplayField>TSF_End_Date__c</errorDisplayField>
+        <errorMessage>Upps, please make sure that your Time Off End Date is after your Start Date. You can&apos;t travel back in time, can you?</errorMessage>
+    </validationRules>
+</CustomObject>
